@@ -74,7 +74,7 @@
 					<!--begin::Wrapper-->
 					<div class="d-flex flex-center flex-column flex-column-fluid px-lg-10 pb-15 pb-lg-20">
 						<!--begin::Form-->
-						<form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="{{ route('sign-in') }}" method="POST">
+						<form class="form w-100"  action="{{ route('sign-in') }}" method="POST">
 						@csrf
 							<!--begin::Heading-->
 							<div class="text-center mb-11">

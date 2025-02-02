@@ -2,11 +2,15 @@
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PenyewaanController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ManajemenBarangController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 // Rute Otentikasi untuk Tamu
 Route::middleware('guest')->group(function () {
@@ -18,7 +22,8 @@ Route::middleware('guest')->group(function () {
         return view('admin.auth.sign-up');
     })->name('sign-up');
     
-    Route::post('/login', [LoginController::class, 'login'])->name('login');
+    Route::post('/sign-up', [RegisterController::class, 'register'])->name('sign-up');
+    Route::post('/sign-in', [LoginController::class, 'login'])->name('sign-in');
 
     Route::get('/verifikasi-otp', function () {
         return view('admin.auth.verifikasi-otp');
@@ -58,12 +63,20 @@ Route::post('/verify-code', [ForgotPasswordController::class, 'verifyCode'])->na
 
 
 // Rute Admin
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
     // menghitung jumlah data
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Rute Manajemen Pengguna
+    Route::get('/manajemen-pengguna', [DashboardController::class, 'manajemenPengguna'])->name('manajemen-pengguna');
+    // Rute penyewaan
+    Route::get('/manajemen-penyewaan', [PenyewaanController::class, 'index'])->name('manajemen-penyewaan');
+
+    // Rute penyewaan barang
+    Route::post('/penyewaan', [PenyewaanController::class, 'store'])->name('penyewaan.store');
+
 
     Route::get('/laporan', function () {
         return view('admin.laporan');
@@ -77,23 +90,23 @@ Route::middleware(['auth'])->group(function () {
         return view('admin.pembayaran');
     })->name('admin.pembayaran');
 
+    
 
     Route::get('/profile', function () {
         return view('admin.profile');
     })->name('profile');
 
-    Route::get('/manajemen-penyewaan', function () {
-        return view('admin.manajemen-penyewaan');
-    })->name('manajemen-penyewaan');
+    
 
     Route::get('/manajemen-barang', function () {
         return view('admin.manajemen-barang');
     })->name('manajemen-barang');
 
-    Route::get('/manajemen-pengguna', function () {
-        return view('admin.manajemen-pengguna');
-    })->name('manajemen-pengguna');
+    
 });
+Route::get('/customer/payment', function () {
+    return view('customer.payment');;
+})->name('customer.payment');
 
 // Socialite untuk Google Login
 Route::get('/auth/redirect', [SocialiteController::class, 'redirect'])->name('auth.google.redirect');
@@ -111,3 +124,5 @@ Route::post('/update-laptop/{id}', [ManajemenBarangController::class, 'updateLap
 //delete produk
 Route::get('/delete-laptop/{id}', [ManajemenBarangController::class, 'deleteLaptop'])->name('delete-laptop');
 Route::get('/delete-handphone/{id}', [ManajemenBarangController::class, 'deleteHandphone'])->name('delete-handphone');
+
+Route::get('/delete-penyewaan/{id_sewa}', [PenyewaanController::class, 'deletePenyewaan'])->name('delete-penyewaan');

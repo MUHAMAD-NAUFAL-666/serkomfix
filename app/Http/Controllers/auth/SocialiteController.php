@@ -13,7 +13,6 @@ class SocialiteController extends Controller
     {
         return Socialite::driver('google')->redirect();
     }
-
     public function callback() 
     {
         try {
@@ -26,21 +25,24 @@ class SocialiteController extends Controller
                     'google_id' => $socialUser->id,
                     'name' => $socialUser->name,
                     'email' => $socialUser->email,
-                    'password' => bcrypt('password'), // Tambahkan default password
+                    'password' => bcrypt('password'),
                     'google_token' => $socialUser->token,
                     'google_refresh_token' => $socialUser->refreshToken,
                     'email_verified_at' => now(),
+                    'role' => 'admin' // Set the role explicitly to admin
                 ]);
                 Auth::login($user);
-                return redirect('/dashboard');
+                return redirect('/dashboard'); // Direct to dashboard since it's an admin
             }
             
-
+            // For existing users, keep the same logic:
             Auth::login($registeredUser);
-            return redirect('/dashboard');
+            return $registeredUser->role === 'admin' ? redirect('/dashboard') : redirect('/welcome');
 
+            
         } catch (\Exception $e) {
             return redirect('/')->with('error', 'Google login failed');
         }
     }
-}
+    }
+    

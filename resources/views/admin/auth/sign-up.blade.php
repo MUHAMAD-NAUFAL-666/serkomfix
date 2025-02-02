@@ -61,7 +61,7 @@
 						<!--begin::Wrapper-->
 						<div class="d-flex flex-center flex-column flex-column-fluid px-lg-10 pb-15 pb-lg-20">
 							<!--begin::Form-->
-							<form class="form w-100" novalidate="novalidate" id="kt_sign_up_form" action="{{ route('sign-up') }}" method="post">
+							<form class="form w-100" novalidate="novalidate" id="kt_sign_up_form" data-kt-redirect-url="/" action="{{ route('sign-up') }}" method="post">
 							@csrf
 								<!--begin::Heading-->
 								<div class="text-center mb-11">

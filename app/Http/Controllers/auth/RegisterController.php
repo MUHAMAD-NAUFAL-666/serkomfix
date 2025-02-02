@@ -17,6 +17,7 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required|same:password',
+            
         ]);
 
         $user = User::create([
@@ -26,9 +27,12 @@ class RegisterController extends Controller
             'password_confirmation' => 'required|same:password',
         ]);
 
-        Auth::login($user);
+        // Auth::login($user);
 
-        return redirect()->intended('/');
+        return response()->json([
+            'success' => true,
+            'redirect' => '/sign-in' // Change this to your sign-in route
+        ]);
     }
     
 }
