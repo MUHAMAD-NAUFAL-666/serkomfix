@@ -84,6 +84,10 @@ return [
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
+    'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+
+
+
     /*
     |--------------------------------------------------------------------------
     | Encryption Key
@@ -122,5 +126,6 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
 
 ];

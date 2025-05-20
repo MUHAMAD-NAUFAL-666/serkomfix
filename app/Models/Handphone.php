@@ -10,6 +10,19 @@ class Handphone extends Model
     use HasFactory;
     protected $table = 'handphone';
     protected $fillable = [
-        'nama', 'merek', 'os', 'ram', 'storage', 'harga_sewa', 'status',
+        'nama',
+        'merek',
+        'os',
+        'ram',
+        'gambar',
+        'layar',
+        'jaringan',
+        'kamera',
+        'storage',
+        'harga_sewa',
+        'chipset',
+        'status',
+        'baterai',
+
     ];
 }

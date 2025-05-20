@@ -13,11 +13,14 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->
     <link href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/nucleo-svg.css" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- CSS Files -->
     <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.1.0" rel="stylesheet" />
+
+    
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -56,7 +59,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/manajemen-barang">
+                    <a class="nav-link  " href="/manajemen-barang">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-calendar-grid-58 text-dark text-sm opacity-10"></i>
@@ -74,7 +77,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="/manajemen-penyewaan">
+                    <a class="nav-link" href="/manajemen-penyewaan">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-app text-dark text-sm opacity-10"></i>
@@ -92,7 +95,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/laporan">
+                    <a class="nav-link active " href="laporan">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-world-2 text-dark text-sm opacity-10"></i>
@@ -101,10 +104,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="/pengaturan">
+                    <a class="nav-link" href="/pengaturan">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-world-2 text-dark text-sm opacity-10"></i>
+                            <i class="ni ni-settings text-dark text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Pengaturan Sistem</span>
                     </a>
@@ -118,7 +121,7 @@
                         <button type="submit" class="nav-link border-0 bg-transparent">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="ni ni-single-copy-04 text-dark text-sm opacity-10"></i>
+                                <i class="ni ni-log-out text-dark text-sm opacity-10"></i>
                             </div>
                             <span class="nav-link-text ms-1">Logout</span>
                         </button>
@@ -142,10 +145,10 @@
                     <div class="col-auto my-auto">
                         <div class="h-100">
                             <h5 class="mb-1">
-                            {{ strtoupper(Auth::user()->name) }}
+                                {{ strtoupper(Auth::user()->name) }}
                             </h5>
                             <p class="mb-0 font-weight-bold text-sm text-muted">
-                            Administrator
+                                Administrator
                             </p>
                         </div>
                     </div>
@@ -187,6 +190,158 @@
             </div>
         </div>
     </main>
+
+    <div class="container-fluid py-4" style="margin-left: 17rem; width: calc(100% - 17rem);">
+        <!-- Statistics Cards Row -->
+        <div class="row">
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card hover-shadow-lg">
+                    <div class="card-body p-4">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-2 text-uppercase font-weight-bold">Total Pendapatan</p>
+                                    <h3 class="font-weight-bolder mb-0">Rp
+                                        {{ number_format($totalPendapatan, 0, ',', '.') }}
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div
+                                    class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle p-3">
+                                    <i class="ni ni-money-coins text-lg opacity-10"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card hover-shadow-lg">
+                    <div class="card-body p-4">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-2 text-uppercase font-weight-bold">Jumlah Transaksi</p>
+                                    <h3 class="font-weight-bolder mb-0">{{ $totalTransaksi }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div
+                                    class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle p-3">
+                                    <i class="ni ni-paper-diploma text-lg opacity-10"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-4 mb-4">
+                <div class="card hover-shadow-lg">
+                    <div class="card-body p-4">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-2 text-uppercase font-weight-bold">Belum Dibayar</p>
+                                    <h3 class="font-weight-bolder mb-0">{{ $belumLunas }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div
+                                    class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle p-3">
+                                    <i class="ni ni-cart text-lg opacity-10"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transaction History Section -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card shadow-lg">
+                    <div class="card-header p-3">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h5 class="mb-0">Riwayat Transaksi Penyewaan</h5>
+                            </div>
+                            <div class="col text-end">
+                                <button class="btn btn-sm btn-primary dropdown-toggle" id="exportDropdown"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-download me-2"></i>Export Data
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                    <li><a class="dropdown-item" href="{{ route('export.pdf') }}">
+                                            <i class="fas fa-file-pdf me-2"></i>Cetak PDF
+                                        </a></li>
+                                    <li><a class="dropdown-item" href="{{ route('export.excel') }}">
+                                            <i class="fas fa-file-excel me-2"></i>Cetak Excel
+                                        </a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-3">
+                            <table class="table align-items-center table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="text-uppercase text-dark text-xs font-weight-bolder opacity-9 px-4">
+                                            ID Transaksi</th>
+                                        <th class="text-uppercase text-dark text-xs font-weight-bolder opacity-9 px-4">
+                                            Tanggal Sewa</th>
+                                        <th class="text-uppercase text-dark text-xs font-weight-bolder opacity-9 px-4">
+                                            Perangkat</th>
+                                        <th class="text-uppercase text-dark text-xs font-weight-bolder opacity-9 px-4">
+                                            Lama Sewa</th>
+                                        <th class="text-uppercase text-dark text-xs font-weight-bolder opacity-9 px-4">
+                                            Total Biaya</th>
+                                        <th class="text-uppercase text-dark text-xs font-weight-bolder opacity-9 px-4">
+                                            Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($penyewaan as $sewa)
+                                        <tr>
+                                            <td class="align-middle px-4">
+                                                <span class="text-sm font-weight-bold">TRX-{{ $sewa->id }}</span>
+                                            </td>
+                                            <td class="align-middle px-4">
+                                                <span class="text-sm">{{ $sewa->tanggal_sewa }}</span>
+                                            </td>
+                                            <td class="align-middle px-4">
+                                                <span class="text-sm">{{ $sewa->merek }}</span>
+                                            </td>
+                                            <td class="align-middle px-4">
+                                                <span class="text-sm">{{ $sewa->durasi }} hari</span>
+                                            </td>
+                                            <td class="align-middle px-4">
+                                                <span class="text-sm">Rp
+                                                    {{ number_format($sewa->harga_sewa, 0, ',', '.') }}</span>
+                                            </td>
+                                            <td class="align-middle px-4">
+                                                <span
+                                                    class="badge badge-sm bg-{{ $sewa->status == 'sewa' ? 'warning' : 'success' }}">
+                                                    {{ $sewa->status == 'sewa' ? 'Belum Lunas' : 'Lunas' }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
     <div class="fixed-plugin">
         <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
             <i class="fa fa-cog py-2"> </i>

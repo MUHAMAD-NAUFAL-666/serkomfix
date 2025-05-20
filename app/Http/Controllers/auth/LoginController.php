@@ -22,11 +22,11 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             Auth::user()->update(['status' => 'active']);
-            
+
             //role
             if (Auth::user()->role === 'customer') {
                 return redirect()->route('customer.welcome');
-            }elseif (Auth::user()->role === 'admin') {
+            } elseif (Auth::user()->role === 'admin') {
                 return redirect()->route('dashboard');
             }
             abort(403, 'Unauthorized access');
@@ -36,15 +36,13 @@ class LoginController extends Controller
             'email' => 'Email atau password yang dimasukkan tidak sesuai.',
         ])->withInput();
     }
- public function logout(Request $request)
+    public function logout(Request $request)
     {
         Auth::user()->update(['status' => 'inactive']);
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        
+
         return redirect('/')->with('message', 'Anda telah logout.');
     }
-
-   
 }

@@ -5,7 +5,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PenyewaanController;
+use App\Http\Controllers\WelcomeController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ManajemenBarangController;
@@ -21,7 +24,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/sign-up', function () {
         return view('admin.auth.sign-up');
     })->name('sign-up');
-    
+
     Route::post('/sign-up', [RegisterController::class, 'register'])->name('sign-up');
     Route::post('/sign-in', [LoginController::class, 'login'])->name('sign-in');
 
@@ -30,10 +33,14 @@ Route::middleware('guest')->group(function () {
     })->name('admin.auth.verifikasi-otp');
 });
 
+Route::get('/laporan', [LaporanController::class, 'index'])->name('admin.laporan');
+
+
 Route::get('/welcome', function () {
     return view('customer.welcome');
 })->name('customer.welcome');
 
+Route::get('/welcome', [WelcomeController::class, 'index'])->name('customer.welcome');
 // Rute Logout
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
@@ -74,13 +81,17 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     // Rute penyewaan
     Route::get('/manajemen-penyewaan', [PenyewaanController::class, 'index'])->name('manajemen-penyewaan');
 
-    // Rute penyewaan barang
-    Route::post('/penyewaan', [PenyewaanController::class, 'store'])->name('penyewaan.store');
+
+    Route::post('/konfirmasi-pembayaran/{id}', [PembayaranController::class, 'konfirmasiPembayaran'])->name('konfirmasi.pembayaran');
+
+    Route::get('/export-pdf', [LaporanController::class, 'exportPDF'])->name('export.pdf');
+    Route::get('/export-excel', [LaporanController::class, 'exportExcel'])->name('export.excel');
+    Route::get('/export-transaksi-pdf/{id}', [PembayaranController::class, 'exportTransaksiPDF'])->name('export.transaksi.pdf');
+    Route::get('/export-transaksi-excel/{id}', [PembayaranController::class, 'exportTransaksiExcel'])->name('export.transaksi.excel');
+    Route::get('/cetak-invoice/{id}', [PembayaranController::class, 'cetakInvoice'])->name('cetak.invoice');
 
 
-    Route::get('/laporan', function () {
-        return view('admin.laporan');
-    })->name('admin.laporan');
+
 
     Route::get('/pengaturan', function () {
         return view('admin.pengaturan');
@@ -90,19 +101,23 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
         return view('admin.pembayaran');
     })->name('admin.pembayaran');
 
-    
+    Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('pembayaran.index');
+
+
+
 
     Route::get('/profile', function () {
         return view('admin.profile');
     })->name('profile');
+    Route::get('about', function () {
+        return view('customer.about');
+    })->name('customer.about');
 
-    
+
 
     Route::get('/manajemen-barang', function () {
         return view('admin.manajemen-barang');
     })->name('manajemen-barang');
-
-    
 });
 Route::get('/customer/payment', function () {
     return view('customer.payment');;
@@ -126,3 +141,7 @@ Route::get('/delete-laptop/{id}', [ManajemenBarangController::class, 'deleteLapt
 Route::get('/delete-handphone/{id}', [ManajemenBarangController::class, 'deleteHandphone'])->name('delete-handphone');
 
 Route::get('/delete-penyewaan/{id_sewa}', [PenyewaanController::class, 'deletePenyewaan'])->name('delete-penyewaan');
+
+
+    // Rute penyewaan barang
+    Route::post('/penyewaan/store', [PenyewaanController::class, 'store'])->name('penyewaan.store');

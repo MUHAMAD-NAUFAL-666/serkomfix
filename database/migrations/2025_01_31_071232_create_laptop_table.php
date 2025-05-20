@@ -17,6 +17,10 @@ return new class extends Migration {
             $table->enum('kategori', ['Gaming', 'Ultrabook', 'Workstation']);
             $table->enum('os', ['Windows', 'MacOS', 'Linux']);
             $table->enum('ram', ['4GB', '8GB', '16GB']);
+            $table->string('gambar')->nullable();
+            $table->string('layar');
+            $table->string('prosesor');
+            $table->string('baterai');
             $table->enum('storage', ['256GB', '512GB', '1TB']);
             $table->decimal('harga_sewa', 10, 3);
             $table->enum('status', ['Tersedia', 'Tidak Tersedia'])->default('Tersedia');

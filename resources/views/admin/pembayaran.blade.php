@@ -11,6 +11,9 @@
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <!-- Nucleo Icons -->
   <link href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/nucleo-svg.css" rel="stylesheet" />
@@ -21,7 +24,7 @@
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
-<!-- Extra details for Live View on GitHub Pages -->
+  <!-- Extra details for Live View on GitHub Pages -->
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6" height="0" width="0"
       style="display:none;visibility:hidden"></iframe></noscript>
@@ -30,7 +33,7 @@
     style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg'); background-position-y: 50%;">
     <span class="mask bg-primary opacity-6"></span>
   </div>
-    <aside
+  <aside
     class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 "
     id="sidenav-main">
     <div class="sidenav-header">
@@ -141,10 +144,10 @@
           <div class="col-auto my-auto">
             <div class="h-100">
               <h5 class="mb-1">
-              {{ strtoupper(Auth::user()->name) }}
+                {{ strtoupper(Auth::user()->name) }}
               </h5>
               <p class="mb-0 font-weight-bold text-sm text-muted">
-              Administrator
+                Administrator
               </p>
             </div>
           </div>
@@ -185,245 +188,166 @@
       </div>
     </div>
 
-    <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-            <div class="card-header pb-0">
-              <h6>Data Transaksi</h6>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center justify-content-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Project</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Budget</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">
-                        Completion</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-spotify.svg"
-                              class="avatar avatar-sm rounded-circle me-2" alt="spotify">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Spotify</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$2,500</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">working</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">60%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="60"
-                                aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-invision.svg"
-                              class="avatar avatar-sm rounded-circle me-2" alt="invision">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Invision</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$5,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">done</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">100%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="100"
-                                aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-jira.svg"
-                              class="avatar avatar-sm rounded-circle me-2" alt="jira">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Jira</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$3,400</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">canceled</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">30%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="30"
-                                aria-valuemin="0" aria-valuemax="30" style="width: 30%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-slack.svg"
-                              class="avatar avatar-sm rounded-circle me-2" alt="slack">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Slack</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$1,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">canceled</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">0%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="0"
-                                aria-valuemin="0" aria-valuemax="0" style="width: 0%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-webdev.svg"
-                              class="avatar avatar-sm rounded-circle me-2" alt="webdev">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Webdev</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$14,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">working</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">80%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="80"
-                                aria-valuemin="0" aria-valuemax="80" style="width: 80%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="../assets/img/small-logos/logo-xd.svg"
-                              class="avatar avatar-sm rounded-circle me-2" alt="xd">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Adobe XD</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$2,300</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">done</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">100%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="100"
-                                aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+          <h6>Data Pembayaran Penyewaan</h6>
+          <div class="col-md-2">
+            <select class="form-select" id="statusFilter">
+              <option value="all">Semua Status</option>
+              <option value="sewa">Sewa</option>
+              <option value="lunas">Lunas</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID Transaksi</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Penyewa</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Device</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Sewa</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Durasi</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total Bayar</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Pembayaran</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($penyewaan as $sewa)
+          <tr>
+            <td class="align-middle px-3">
+            <span class="text-sm font-weight-bold">TRX-{{ $sewa->id }}</span>
+            </td>
+            <td class="align-middle px-3">
+            <div class="d-flex px-2">
+              <div class="d-flex flex-column justify-content-center">
+              <h6 class="mb-0 text-sm">{{ $sewa->nama }}</h6>
+              <p class="text-xs text-secondary mb-0">{{ $sewa->email }}</p>
               </div>
             </div>
+            </td>
+            <td class="align-middle px-3">
+            <span class="text-sm">{{ $sewa->merek }}</span>
+            </td>
+            <td class="align-middle px-3">
+            <span class="text-sm">{{ $sewa->tanggal_sewa }}</span>
+            </td>
+            <td class="align-middle px-3">
+            <span class="text-sm">{{ $sewa->durasi }} hari</span>
+            </td>
+            <td class="align-middle px-3">
+            <span class="text-sm">Rp {{ number_format($sewa->harga_sewa, 0, ',', '.') }}</span>
+            </td>
+            <td class="align-middle px-3">
+            <span class="badge badge-sm bg-{{ $sewa->status == 'sewa' ? 'warning' : 'success' }}">
+              {{ $sewa->status }}
+            </span>
+            </td>
+            <td class="align-middle px-3">
+            <button class="btn btn-sm btn-info" onclick="showDetail({{ $sewa->id }})">Detail</button>
+            <button class="btn btn-sm btn-success"
+              onclick="konfirmasiPembayaran({{ $sewa->id}})">Konfirmasi</button>
+            <div class="btn-group">
+              <button class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="fas fa-download"></i>
+              </button>
+              <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="{{ route('export.transaksi.pdf', ['id' => $sewa->id]) }}">
+                <i class="fas fa-file-pdf me-2"></i>PDF
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{{ route('export.transaksi.excel', ['id' => $sewa->id]) }}">
+                <i class="fas fa-file-excel me-2"></i>Excel
+                </a>
+              </li>
+              </ul>
+            </div>
+            </td>
+          </tr>
+        @endforeach
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-      <!-- End Navbar -->
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-gradient-primary">
+            <h5 class="modal-title text-white" id="detailModalLabel">
+              <i class="fas fa-info-circle me-2"></i>Detail Informasi Penyewaan
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-4">
+            <div class="row">
+              <!-- Left Column -->
+              <div class="col-md-6 border-end">
+                <div class="d-flex align-items-center mb-4">
+                  <div class="avatar avatar-xl position-relative me-3">
+                    <img src="../assets/img/team-1.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                  </div>
+                  <div>
+                    <h6 class="mb-0" id="detail-nama"></h6>
+                    <p class="text-sm text-muted mb-0" id="detail-email"></p>
+                  </div>
+                </div>
+
+                <div class="info-card bg-light p-3 rounded mb-3">
+                  <h6 class="text-primary mb-3">Informasi Transaksi</h6>
+                  <div class="d-flex justify-content-between mb-2">
+                    <span class="text-dark">ID Transaksi:</span>
+                    <strong id="detail-id" class="text-primary"></strong>
+                  </div>
+                  <div class="d-flex justify-content-between mb-2">
+                    <span class="text-dark">Status:</span>
+                    <span id="detail-status" class="badge bg-gradient-success"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Column -->
+              <div class="col-md-6">
+                <div class="info-card bg-light p-3 rounded mb-3">
+                  <h6 class="text-primary mb-3">Detail Penyewaan</h6>
+                  <div class="mb-3">
+                    <label class="text-sm text-muted">Device</label>
+                    <h6 id="detail-device" class="mb-2"></h6>
+                  </div>
+                  <div class="mb-3">
+                    <label class="text-sm text-muted">Tanggal Sewa</label>
+                    <h6 id="detail-tanggal" class="mb-2"></h6>
+                  </div>
+                  <div class="mb-3">
+                    <label class="text-sm text-muted">Durasi Sewa</label>
+                    <h6 id="detail-durasi" class="mb-2"></h6>
+                  </div>
+                  <div class="mb-3">
+                    <label class="text-sm text-muted">Total Pembayaran</label>
+                    <h6 id="detail-total" class="text-primary fw-bold mb-2"></h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Tutup</button>
+            <button type="button" class="btn bg-gradient-primary">Cetak Invoice</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- End Navbar -->
 
   </main>
   <div class="fixed-plugin">
@@ -495,11 +419,95 @@
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Add this in the head section -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/argon-dashboard.min.js?v=2.1.0"></script>
+
+  <script>
+    function konfirmasiPembayaran(id) {
+      Swal.fire({
+        title: 'Konfirmasi Pembayaran',
+        text: "Apakah anda yakin ingin mengkonfirmasi pembayaran ini?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Konfirmasi',
+        cancelButtonText: 'Tidak'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: `/konfirmasi-pembayaran/${id}`,
+            type: 'POST',
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+              Swal.fire(
+                'Berhasil!',
+                'Status pembayaran telah diubah menjadi lunas.',
+                'success'
+              ).then(() => {
+                location.reload();
+              });
+            }
+          });
+        }
+      });
+    }
+    function showDetail(id) {
+      // Find the corresponding row data
+      const row = Array.from(document.querySelectorAll('tbody tr')).find(tr => {
+        return tr.querySelector('td:first-child').textContent.includes(id);
+      });
+
+      if (row) {
+        // Get all data from the row
+        const cells = row.querySelectorAll('td');
+
+        // Populate modal with data
+        document.getElementById('detail-id').textContent = cells[0].textContent.trim();
+        document.getElementById('detail-nama').textContent = cells[1].querySelector('h6').textContent.trim();
+        document.getElementById('detail-email').textContent = cells[1].querySelector('p').textContent.trim();
+        document.getElementById('detail-device').textContent = cells[2].textContent.trim();
+        document.getElementById('detail-tanggal').textContent = cells[3].textContent.trim();
+        document.getElementById('detail-durasi').textContent = cells[4].textContent.trim();
+        document.getElementById('detail-total').textContent = cells[5].textContent.trim();
+        document.getElementById('detail-status').textContent = cells[6].textContent.trim();
+
+        // Show the modal
+        const modal = new bootstrap.Modal(document.getElementById('detailModal'));
+        modal.show();
+      }
+    }
+
+    // Add this to your existing script section
+    document.querySelector('.btn.bg-gradient-primary').addEventListener('click', function () {
+      const id = document.getElementById('detail-id').textContent.replace('TRX-', '');
+      window.open(`/cetak-invoice/${id}`, '_blank');
+    });
+
+    document.getElementById('statusFilter').addEventListener('change', function() {
+    const status = this.value;
+    const rows = document.querySelectorAll('tbody tr');
+    
+    rows.forEach(row => {
+        const statusCell = row.querySelector('td:nth-child(7)');
+        const statusText = statusCell.textContent.trim().toLowerCase();
+        
+        if (status === 'all' || statusText === status) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
+
+  </script>
 </body>
 
 </html>

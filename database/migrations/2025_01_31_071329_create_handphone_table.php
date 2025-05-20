@@ -16,8 +16,14 @@ return new class extends Migration {
             $table->string('merek');
             $table->enum('os', ['Android', 'iOS']);
             $table->enum('ram', ['4GB', '8GB', '16GB']);
+            $table->string('gambar')->nullable();
+            $table->string('layar');
+            $table->string('jaringan');
+            $table->string('kamera');
             $table->enum('storage', ['128GB', '256GB', '512GB', '1TB']);
             $table->decimal('harga_sewa', 10, 3);
+            $table->string('chipset');
+            $table->string('baterai');
             $table->enum('status', ['Tersedia', 'Tidak Tersedia'])->default('Tersedia');
             $table->timestamps();
         });

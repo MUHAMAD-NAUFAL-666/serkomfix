@@ -11,6 +11,10 @@
     <title>FlexiGadget - Handphone&Laptop Rent </title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Tempatkan ini di dalam tag <head> atau sebelum <script> -->
+    <meta name="user-logged-in" content="{{ Auth::check() ? 'true' : 'false' }}">
+
+
 
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -39,7 +43,7 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    
+
 </head>
 
 <body>
@@ -90,8 +94,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav mx-auto py-0">
-                        <a href="/" class="nav-item nav-link active">Home</a>
-                        <a href="about" class="nav-item nav-link ">About</a>
+                        <a href="/welcome" class="nav-item nav-link active">Home</a>
+                        <a href="/about" class="nav-item nav-link ">About</a>
                         <a href="service" class="nav-item nav-link">Service</a>
                         <a href="blog" class="nav-item nav-link">Blog</a>
 
@@ -124,7 +128,7 @@
     <!-- Carousel Start -->
     <div class="header-carousel">
         <div id="carouselId" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
-           
+
             <div class="carousel-inner" role="listbox">
                 <div class="carousel-item active">
                     <img src="img/download (4).jpeg" class="img-fluid w-100" alt="First slide" />
@@ -133,7 +137,7 @@
                             <div class="row g-5">
                                 <div class="col-lg-6 fadeInLeft animated" data-animation="fadeInLeft" data-delay="1s"
                                     style="animation-delay: 1s;">
-                                   
+
                                 </div>
                                 <div class="col-lg-6 d-none d-lg-flex fadeInRight animated" data-animation="fadeInRight"
                                     data-delay="1s" style="animation-delay: 1s;">
@@ -483,6 +487,132 @@
             </div>
 
             <div class="categories-carousel owl-carousel wow fadeInUp" data-wow-delay="0.1s">
+                @foreach($handphone as $h)
+                    <div class="categories-item p-4">
+                        <div class="categories-item-inner">
+                            <div class="d-flex ">
+                                <div class="avatar avatar-xl position-relative">
+                                    @if($h->gambar)
+                                        <img src="{{ Storage::url($h->gambar) }}" alt="handphone image"
+                                            class="w-100 border-radius-lg shadow-sm">
+                                    @else
+                                        <img src="{{ asset('assets/img/default-handphone.jpg') }}" alt="default handphone image"
+                                            class="w-100 border-radius-lg shadow-sm">
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="categories-content rounded-bottom p-4">
+                                <h4>{{ $h->nama }}</h4>
+                                <div class="categories-review mb-4">
+                                    <div class="me-3">5.0 Review</div>
+                                    <div class="d-flex justify-content-center text-secondary">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star text-body"></i>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <h4 class="bg-white text-primary rounded-pill py-2 px-4 mb-0">
+                                        {{ number_format($h->harga_sewa, 0, ',', '.') }}/Day
+                                    </h4>
+                                </div>
+                                <div class="row gy-2 gx-0 text-center mb-4">
+                                    <div class="col-4 border-end border-white">
+                                        <i class="fa fa-memory text-dark"></i> <span
+                                            class="text-body ms-1">{{ $h->ram }}/{{ $h->storage }}</span>
+                                    </div>
+
+                                    <div class="col-4 border-end border-white">
+                                        <i class="fa fa-mobile text-dark"></i> <span
+                                            class="text-body ms-1">{{ $h->kamera }}</span>
+                                    </div>
+                                    <div class="col-4">
+                                        <i class="fa fa-wifi text-dark"></i> <span
+                                            class="text-body ms-1">{{ $h->jaringan }}</span>
+                                    </div>
+                                    <div class="col-4">
+                                        <i class="fa fa-microchip text-dark"></i> <span
+                                            class="text-body ms-1">{{ $h->chipset }}</span>
+                                    </div>
+                                    <div class="col-4">
+                                        <i class="fa fa-camera text-dark"></i> <span
+                                            class="text-body ms-1">{{ $h->layar }}</span>
+                                    </div>
+                                   
+                                </div>
+                                <button class="btn btn-primary rounded-pill w-100 d-flex justify-content-center py-3"  data-bs-toggle="modal" data-bs-target="#rentalModal" data-device="iPhone 15 Plus">Book Now</button>
+
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+                @foreach($laptop as $l)
+                    <div class="categories-item p-4">
+                        <div class="categories-item-inner">
+                            <div class="d-flex ">
+                                <div class="avatar avatar-xl position-relative">
+                                    @if($l->gambar)
+                                        <img src="{{ Storage::url($l->gambar) }}" alt="laptop image"
+                                            class="w-100 border-radius-lg shadow-sm">
+                                    @else
+                                        <img src="{{ asset('assets/img/default-laptop.jpg') }}" alt="default laptop image"
+                                            class="w-100 border-radius-lg shadow-sm">
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="categories-content rounded-bottom p-4">
+                                <h4>{{ $l->nama }}</h4>
+                                <div class="categories-review mb-4">
+                                    <div class="me-3">5.0 Review</div>
+                                    <div class="d-flex justify-content-center text-secondary">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star text-body"></i>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <h4 class="bg-white text-primary rounded-pill py-2 px-4 mb-0">
+                                        {{ number_format($l->harga_sewa, 0, ',', '.') }}/Day
+                                    </h4>
+                                </div>
+                                <div class="row gy-2 gx-0 text-center mb-4">
+                                    <div class="col-4 border-end border-white">
+                                        <i class="fa fa-memory text-dark"></i> <span
+                                            class="text-body ms-1">{{ $l->ram }}/{{ $l->storage }}</span>
+                                    </div>
+
+                                    <div class="col-4 border-end border-white">
+                                        <i class="fa fa-battery-half text-dark"></i> <span
+                                            class="text-body ms-1">{{ $l->baterai }}</span>
+                                    </div>
+                                    <div class="col-4">
+                                        <i class="fa fa-cogs text-dark"></i> <span
+                                            class="text-body ms-1">{{ $l->os }}</span>
+                                    </div>
+                                    <div class="col-4">
+                                        <i class="fa fa-desktop text-dark"></i> <span
+                                            class="text-body ms-1">{{ $l->layar }}</span>
+                                    </div>
+                                    <div class="col-4">
+                                        <i class="fa fa-microchip text-dark"></i> <span
+                                            class="text-body ms-1">{{ $l->prosesor }}</span>
+                                    </div>
+                                    <div class="col-4">
+                                        <i class="fa fa-category text-dark"></i> <span
+                                            class="text-body ms-1">{{ $l->kategori }}</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary rounded-pill w-100 d-flex justify-content-center py-3"  data-bs-toggle="modal" data-bs-target="#rentalModal" data-device="iPhone 15 Plus">Book Now</button>
+
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
                 <div class="categories-item p-4">
                     <div class="categories-item-inner">
                         <div class="categories-img rounded-top">
@@ -496,7 +626,7 @@
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i> 
+                                    <i class="fas fa-star"></i>
                                     <i class="fas fa-star text-body"></i>
                                 </div>
                             </div>
@@ -529,8 +659,9 @@
                                         Chip</span>
                                 </div>
                             </div>
-                            <button class="btn btn-primary rounded-pill w-100 d-flex justify-content-center py-3"  data-bs-toggle="modal" data-bs-target="#rentalModal" data-device="iPhone 15 Plus">Book
-                            Now</button>
+                            <button class="btn btn-primary rounded-pill w-100 d-flex justify-content-center py-3"
+                                data-bs-toggle="modal" data-bs-target="#rentalModal" data-device="iPhone 15 Plus">Book
+                                Now</button>
                         </div>
                     </div>
                 </div>
@@ -580,7 +711,8 @@
                                         Chip</span>
                                 </div>
                             </div>
-                            <button class="btn btn-primary rounded-pill w-100 d-flex justify-content-center py-3"  data-bs-toggle="modal" data-bs-target="#rentalModal" data-device="iPhone 15 Plus">Book
+                            <button class="btn btn-primary rounded-pill w-100 d-flex justify-content-center py-3"
+                                data-bs-toggle="modal" data-bs-target="#rentalModal" data-device="iPhone 15 Plus">Book
                                 Now</button>
                         </div>
 
@@ -628,9 +760,10 @@
                                     <i class="fa fa-cogs text-dark"></i> <span class="text-body ms-1">Windows 11</span>
                                 </div>
                             </div>
-                            <button class="btn btn-primary rounded-pill w-100 d-flex justify-content-center py-3"  data-bs-toggle="modal" data-bs-target="#rentalModal" data-device="iPhone 15 Plus">Book
-                            Now</button>
-                    </button>
+                            <button class="btn btn-primary rounded-pill w-100 d-flex justify-content-center py-3"
+                                data-bs-toggle="modal" data-bs-target="#rentalModal" data-device="iPhone 15 Plus">Book
+                                Now</button>
+                            </button>
                         </div>
 
                     </div>
@@ -678,8 +811,9 @@
                                     <i class="fa fa-cogs text-dark"></i> <span class="text-body ms-1">macOS</span>
                                 </div>
                             </div>
-                            <button class="btn btn-primary rounded-pill w-100 d-flex justify-content-center py-3"  data-bs-toggle="modal" data-bs-target="#rentalModal" data-device="iPhone 15 Plus">Book
-                                Now</button>
+                            <button class="btn btn-primary rounded-pill w-100 d-flex justify-content-center py-3"
+                                data-bs-toggle="modal" data-bs-target="#rentalModal" data-device="Macbook M3 Air"
+                                data-price="2100000">Book Now</button>
                         </div>
 
                     </div>
@@ -687,41 +821,100 @@
             </div>
         </div>
     </div>
+
+
     <!-- Modal Penyewaan -->
-<div class="modal fade" id="rentalModal" tabindex="-1" aria-labelledby="rentalModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="rentalModalLabel">Penyewaan Perangkat</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      <form id="rentalForm" action="{{ route('penyewaan.store') }}" method="POST">
-        @csrf
-       <div class="mb-3">
-        <label for="deviceName" class="form-label">Nama Device</label>
-        <input type="text" class="form-control" name="merek" id="deviceName" readonly>
+    <div class="modal fade" id="rentalModal" tabindex="-1" aria-labelledby="rentalModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rentalModalLabel">Penyewaan Perangkat</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="rentalForm" action="{{ route('penyewaan.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id_user" value="{{ Auth::id() }}">
+
+                        <div class="mb-3">
+                            <label for="deviceName" class="form-label">Nama Device</label>
+                            <input type="text" class="form-control" name="merek" id="deviceName" readonly required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="renterName" class="form-label">Nama Anda</label>
+                            <input type="text" class="form-control" name="nama" id="renterName"
+                                value="{{ Auth::user()->name ?? '' }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                        <label for="renterWa" class="form-label">Nomor WhatsApp</label>
+                        <input type="text" class="form-control" name="no_wa" id="renterWa"
+                            placeholder="Contoh: 6281234567890" required>
+                    </div>
+                    
+                        <div class="mb-3">
+                            <label for="renterDurasi" class="form-label">Durasi</label>
+                            <input type="number" class="form-control" name="durasi" id="renterDurasi" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="rentalDate" class="form-label">Tanggal Penyewaan</label>
+                            <input type="date" class="form-control" name="tanggal_sewa" id="rentalDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rentalHarga" class="form-label">Harga Sewa</label>
+                            <input type="number" class="form-control" name="harga_sewa" id="rentalHarga" required>
+                        </div>
+
+                        <input type="hidden" name="status" value="sewa">
+
+                        <button type="submit" class="btn btn-primary">Sewa Sekarang</button>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="mb-3">
-        <label for="renterName" class="form-label">Nama Anda</label>
-        <input type="text" class="form-control" name="nama" id="renterName" value="{{ Auth::user()->name ?? '' }}" required>
+
+    <!--loading modal -->
+    <div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="spinner-border text-primary mb-3" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <h5>Mohon tunggu sebentar...</h5>
+                    <p>Sedang memproses penyewaan Anda</p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="mb-3">
-        <label for="renterDurasi" class="form-label">Durasi</label>
-        <input type="number" class="form-control" name="durasi" id="renterDurasi" required>
+
+    <!-- Modal Sukses -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Penyewaan Berhasil!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Ikon Ceklis -->
+                    <div class="text-center">
+                        <i class="bi bi-check-circle" style="font-size: 50px; color: green;"></i>
+                        <p id="successMessage">Penyewaan berhasil! Terima kasih telah melakukan penyewaan.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="mb-3">
-        <label for="rentalDate" class="form-label">Tanggal Penyewaan</label>
-        <input type="date" class="form-control" name="tanggal_sewa" id="rentalDate" required>
-    </div>
-    <input type="hidden" name="id" value="{{ Auth::id() }}">
-    <input type="hidden" name="status" value="pending">
-    <button type="submit" class="btn btn-primary">Sewa Sekarang</button>
-</form>
-      </div>
-    </div>
-  </div>
-</div>
+
 
     <!-- Car categories End -->
 
@@ -816,7 +1009,7 @@
                             </div>
                             <a href="#" class="h4 d-block mb-3">Understanding the Rental Cost for High-End Phones</a>
                             <p class="mb-3">Menyewa handphone premium bisa lebih terjangkau daripada membeli. Cari tahu
-                                tentang biaya sewa berbagai tipe handphone dan cara mendapatkan penawaran terbaik.</p>
+                                tentang biaya sewa berbagai tipe Dddan cara mendapatkan penawaran terbaik.</p>
                             <a href="#" class="">Read More <i class="fa fa-arrow-right"></i></a>
                         </div>
                     </div>
@@ -963,7 +1156,7 @@
     <!-- Team End -->
 
     <!-- Testimonial Start -->
-    
+
 
     <!-- Testimonial End -->
 
@@ -1073,62 +1266,122 @@
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/counterup/counterup.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 
     <script>
-       document.addEventListener("DOMContentLoaded", function () {
-    // Hapus semua elemen select
-    document.querySelectorAll("select.form-select").forEach(select => {
-        select.remove();
-    });
-
-    // Inisialisasi modal rental
+        document.addEventListener("DOMContentLoaded", function () {
+    // Initialize rental modal
     const rentalModal = document.getElementById("rentalModal");
     const bookNowButtons = document.querySelectorAll(".btn-primary[data-bs-toggle='modal']");
+    const rentalHargaInput = document.getElementById("rentalHarga");
+    const durasiInput = document.getElementById("renterDurasi");
 
-    // Event listener untuk tombol Book Now
+    // Price mapping for each device
+    const devicePrices = {
+        "iPhone 15 Plus": 900000,
+        "Samsung S24 Ultra": 1300000,
+        "Asus TUF": 980000,
+        "Macbook M3 Air": 2100000
+    };
+
+    // Book Now button event listeners
     bookNowButtons.forEach(button => {
         button.addEventListener("click", function () {
             const deviceName = this.getAttribute("data-device");
             document.getElementById("deviceName").value = deviceName;
+
+            // Set initial price
+            const basePrice = devicePrices[deviceName];
+            rentalHargaInput.value = basePrice;
+
+            // Update price when duration changes
+            durasiInput.addEventListener("input", function () {
+                const duration = parseInt(this.value) || 0;
+                const totalPrice = basePrice * duration;
+                rentalHargaInput.value = totalPrice;
+            });
         });
     });
 
+    // Set user name if available
     const userName = document.querySelector('meta[name="user-name"]')?.content;
-        if (userName) {
-            document.getElementById("renterName").value = userName;
-        }
-    // Event listener untuk form submission
-    document.getElementById("rentalForm").addEventListener("submit", function (event) {
-        event.preventDefault();
-        
-        // Get form data
-        const deviceName = document.getElementById("deviceName").value;
-        const renterName = document.getElementById("renterName").value;
-        const duration = parseInt(document.getElementById("renterDurasi").value);
-        const startDate = new Date(document.getElementById("rentalDate").value);
-        
-        // Calculate end date
-        const endDate = new Date(startDate);
-        endDate.setDate(endDate.getDate() + duration);
-        
-        // Format dates for display
-        const startDateFormatted = startDate.toLocaleDateString('id-ID');
-        const endDateFormatted = endDate.toLocaleDateString('id-ID');
+    if (userName) {
+        document.getElementById("renterName").value = userName;
+    }
 
-        // Show success message with rental period
-        alert(`Pemesanan berhasil dikirim! 
-Periode sewa: ${startDateFormatted} sampai ${endDateFormatted}
-Kami akan segera menghubungi Anda.`);
-        
-        // Close modal
-        const modal = bootstrap.Modal.getInstance(rentalModal);
-        if (modal) {
-            modal.hide();
-        }
+    // Form submission handler using jQuery
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('#rentalForm').on('submit', function (e) {
+            e.preventDefault();
+            
+            // Show loading modal
+            $('#loadingModal').modal('show');
+            
+            const formData = $(this).serialize();
+            console.log("Data yang dikirim:", formData);
+
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function (response) {
+                    // Hide loading modal after 2 seconds
+                    setTimeout(function() {
+                        $('#loadingModal').modal('hide');
+                        console.log("Response dari server:", response);
+
+                        let message = response.message || "Penyewaan berhasil!";
+
+                        if (!response.message) {
+                            const tanggalSewa = new Date($('#tanggal_sewa').val());
+                            const durasi = parseInt($('#durasi').val());
+                            tanggalSewa.setDate(tanggalSewa.getDate() + durasi);
+                            const tanggalSelesai = tanggalSewa.toISOString().split('T')[0];
+
+                            message = `Penyewaan berhasil! Anda menyewa selama ${durasi} hari. Jangan lupa untuk di kembalikan ya guys Sewa berakhir pada: ${tanggalSelesai}.`;
+                        }
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Penyewaan Berhasil!',
+                            text: message,
+                            confirmButtonText: 'Tutup',
+                            timer: 5000
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
+                    }, 2000); // Show loading for 2 seconds
+                },
+                error: function (xhr) {
+                    $('#loadingModal').modal('hide');
+                    console.log("Error Response:", xhr.responseJSON);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Terjadi kesalahan. Periksa kembali input.'
+                    });
+                }
+            });
+        });
     });
 });
 
+
     </script>
+
+
 
 
 

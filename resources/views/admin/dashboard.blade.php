@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Argon Dashboard 3 by Creative Tim
+    FlexiGadget
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -18,6 +18,36 @@
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.1.0" rel="stylesheet" />
+
+  <style>
+   .slide-up {
+    animation: slideUp 2s ease-out infinite;
+    transform-origin: bottom;
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    20% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    80% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+.slide-up:nth-child(2) {
+    animation-delay: 0.3s;
+}
+  </style>
 
 </head>
 
@@ -39,9 +69,12 @@
         aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html "
         target="_blank">
-        <img src="../assets/img/logo-ct-dark.png" width="26px" height="26px" class="navbar-brand-img h-100"
-          alt="main_logo">
-        <span class="ms-1 font-weight-bold">FLEXIGADGET</span>
+        <img src="../assets/img/logo-ct-dark.png" 
+     width="26px" 
+     height="26px" 
+     class="navbar-brand-img h-100 slide-up"
+     alt="main_logo">
+<span class="ms-1 font-weight-bold slide-up">FLEXIGADGET</span>
       </a>
     </div>
     <hr class="horizontal dark mt-0">
