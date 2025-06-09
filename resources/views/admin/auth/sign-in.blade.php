@@ -4,7 +4,7 @@
 
 <head>
 	<base href="../../../" />
-	<title>Metronic - The World's #1 Selling Bootstrap Admin Template by Keenthemes</title>
+	<title>flexigadget </title>
 	<meta charset="utf-8" />
 	<meta name="description"
 		content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
@@ -60,7 +60,7 @@
 		<!--begin::Page bg image-->
 		<style>
 			body {
-				background-image: url('assets/media/auth/bg4.jpg');
+				background-image: url('assets/media/auth/bg9-dark.jpg');
 			}
 
 			[data-bs-theme="dark"] body {
@@ -76,11 +76,11 @@
 				<div class="d-flex flex-center flex-lg-start flex-column">
 					<!--begin::Logo-->
 					<a href="../../demo31/dist/index.html" class="mb-7">
-						<img alt="Logo" src="assets/media/logos/custom-3.svg" />
+						<img alt="Logo" src="assets/media/logos/flexigadget.png" />
 					</a>
 					<!--end::Logo-->
 					<!--begin::Title-->
-					<h2 class="text-white fw-normal m-0">Branding tools designed for your business</h2>
+					<h2 class="text-white fw-normal m-0">Penyewaan Handphone dan Laptop di flexigadget aja</h2>
 					<!--end::Title-->
 				</div>
 				<!--begin::Aside-->

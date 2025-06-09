@@ -497,103 +497,333 @@
   </div>
 
   <!--   Core JS Files   -->
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/chartjs.min.js"></script>
-  <script>
-    var ctx1 = document.getElementById("chart-line").getContext("2d");
+  <!--   Core JS Files   -->
+<script src="../assets/js/core/popper.min.js"></script>
+<script src="../assets/js/core/bootstrap.min.js"></script>
+<script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+<script src="../assets/js/plugins/chartjs.min.js"></script>
 
-    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+<script>
+// Inisialisasi Chart dengan variabel global untuk realtime update
+var ctx1 = document.getElementById("chart-line").getContext("2d");
+var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
 
-    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
-    gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
-    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
-    new Chart(ctx1, {
-      type: "line",
-      data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [{
-          label: "Mobile apps",
-          tension: 0.4,
-          borderWidth: 0,
-          pointRadius: 0,
-          borderColor: "#5e72e4",
-          backgroundColor: gradientStroke1,
-          borderWidth: 3,
-          fill: true,
-          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-          maxBarThickness: 6
+gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
 
-        }],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          }
-        },
-        interaction: {
-          intersect: false,
-          mode: 'index',
-        },
-        scales: {
-          y: {
-            grid: {
-              drawBorder: false,
-              display: true,
-              drawOnChartArea: true,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              padding: 10,
-              color: '#fbfbfb',
-              font: {
-                size: 11,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-          x: {
-            grid: {
-              drawBorder: false,
-              display: false,
-              drawOnChartArea: false,
-              drawTicks: false,
-              borderDash: [5, 5]
-            },
-            ticks: {
-              display: true,
-              color: '#ccc',
-              padding: 20,
-              font: {
-                size: 11,
-                family: "Open Sans",
-                style: 'normal',
-                lineHeight: 2
-              },
-            }
-          },
-        },
-      },
-    });
-  </script>
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
+// Simpan chart dalam variabel global untuk update realtime
+window.mainChart = new Chart(ctx1, {
+  type: "line",
+  data: {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    datasets: [{
+      label: "Penyewaan Bulanan",
+      tension: 0.4,
+      borderWidth: 0,
+      pointRadius: 0,
+      borderColor: "#5e72e4",
+      backgroundColor: gradientStroke1,
+      borderWidth: 3,
+      fill: true,
+      data: [50, 40, 300, 220, 500, 250, 400, 230, 500, 300, 400, 350],
+      maxBarThickness: 6
+    }],
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
       }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    },
+    interaction: {
+      intersect: false,
+      mode: 'index',
+    },
+    scales: {
+      y: {
+        grid: {
+          drawBorder: false,
+          display: true,
+          drawOnChartArea: true,
+          drawTicks: false,
+          borderDash: [5, 5]
+        },
+        ticks: {
+          display: true,
+          padding: 10,
+          color: '#fbfbfb',
+          font: {
+            size: 11,
+            family: "Open Sans",
+            style: 'normal',
+            lineHeight: 2
+          },
+        }
+      },
+      x: {
+        grid: {
+          drawBorder: false,
+          display: false,
+          drawOnChartArea: false,
+          drawTicks: false,
+          borderDash: [5, 5]
+        },
+        ticks: {
+          display: true,
+          color: '#ccc',
+          padding: 20,
+          font: {
+            size: 11,
+            family: "Open Sans",
+            style: 'normal',
+            lineHeight: 2
+          },
+        }
+      },
+    },
+  },
+});
+
+// Fungsi untuk update data realtime
+function updateDashboardData() {
+    fetch('/dashboard/realtime-data')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update statistik cards
+                const handphoneElement = document.getElementById('handphone-count');
+                const laptopElement = document.getElementById('laptop-count');
+                const penyewaanElement = document.getElementById('penyewaan-count');
+                const customerElement = document.getElementById('customer-count');
+                const lastUpdateElement = document.getElementById('last-update');
+                
+                if (handphoneElement) {
+                    // Animasi counter
+                    animateCounter(handphoneElement, parseInt(handphoneElement.textContent), data.stats.jumlahHandphone);
+                }
+                
+                if (laptopElement) {
+                    animateCounter(laptopElement, parseInt(laptopElement.textContent), data.stats.jumlahLaptop);
+                }
+                
+                if (penyewaanElement) {
+                    animateCounter(penyewaanElement, parseInt(penyewaanElement.textContent), data.stats.jumlahPenyewaan);
+                }
+                
+                if (customerElement) {
+                    animateCounter(customerElement, parseInt(customerElement.textContent), data.stats.jumlahCustomer);
+                }
+                
+                // Update timestamp
+                if (lastUpdateElement) {
+                    lastUpdateElement.textContent = 'Terakhir update: ' + data.timestamp;
+                }
+                
+                // Update grafik utama dengan data bulanan
+                if (window.mainChart && data.monthlyChart) {
+                    window.mainChart.data.datasets[0].data = data.monthlyChart;
+                    window.mainChart.update('none'); // Update tanpa animasi untuk performa
+                }
+                
+                // Update indikator realtime
+                updateRealtimeIndicator(true);
+                
+                console.log('Dashboard data updated successfully at ' + data.timestamp);
+            } else {
+                console.error('Error in response:', data.message);
+                updateRealtimeIndicator(false);
+            }
+        })
+        .catch(error => {
+            console.error('Error updating dashboard:', error);
+            updateRealtimeIndicator(false);
+        });
+}
+
+// Fungsi animasi counter
+function animateCounter(element, start, end) {
+    if (start === end) return;
+    
+    const duration = 1000; // 1 detik
+    const startTime = performance.now();
+    
+    function updateCounter(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        const current = Math.floor(start + (end - start) * progress);
+        element.textContent = current;
+        
+        if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+        }
     }
-  </script>
+    
+    requestAnimationFrame(updateCounter);
+}
+
+// Fungsi untuk update indikator realtime
+function updateRealtimeIndicator(isOnline) {
+    const indicator = document.querySelector('.realtime-indicator');
+    if (indicator) {
+        if (isOnline) {
+            indicator.style.backgroundColor = '#28a745'; // Hijau
+            indicator.style.animation = 'pulse 2s infinite';
+        } else {
+            indicator.style.backgroundColor = '#dc3545'; // Merah
+            indicator.style.animation = 'none';
+        }
+    }
+}
+
+// Fungsi untuk menambahkan efek loading
+function showLoadingEffect() {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        card.style.opacity = '0.7';
+        card.style.transition = 'opacity 0.3s';
+    });
+}
+
+function hideLoadingEffect() {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        card.style.opacity = '1';
+    });
+}
+
+// Event listener untuk update manual
+document.addEventListener('DOMContentLoaded', function() {
+    // Tambahkan tombol refresh manual (opsional)
+    const refreshButton = document.createElement('button');
+    refreshButton.innerHTML = '<i class="fas fa-sync-alt"></i>';
+    refreshButton.className = 'btn btn-sm btn-outline-primary';
+    refreshButton.style.position = 'fixed';
+    refreshButton.style.bottom = '20px';
+    refreshButton.style.right = '20px';
+    refreshButton.style.zIndex = '9999';
+    refreshButton.title = 'Refresh Data Manual';
+    
+    refreshButton.addEventListener('click', function() {
+        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        updateDashboardData();
+        setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-sync-alt"></i>';
+        }, 1000);
+    });
+    
+    document.body.appendChild(refreshButton);
+    
+    // Update pertama kali setelah 3 detik
+    setTimeout(() => {
+        updateDashboardData();
+    }, 3000);
+    
+    // Set interval untuk update otomatis setiap 15 detik
+    setInterval(updateDashboardData, 15000);
+    
+    console.log('Dashboard realtime initialized');
+});
+
+// Fungsi untuk pause/resume realtime update
+let realtimeInterval;
+let isRealtimePaused = false;
+
+function toggleRealtime() {
+    if (isRealtimePaused) {
+        realtimeInterval = setInterval(updateDashboardData, 15000);
+        isRealtimePaused = false;
+        console.log('Realtime updates resumed');
+    } else {
+        clearInterval(realtimeInterval);
+        isRealtimePaused = true;
+        console.log('Realtime updates paused');
+    }
+}
+
+// Handle visibility change (pause ketika tab tidak aktif)
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+        clearInterval(realtimeInterval);
+        console.log('Tab hidden - pausing realtime updates');
+    } else {
+        if (!isRealtimePaused) {
+            realtimeInterval = setInterval(updateDashboardData, 15000);
+            updateDashboardData(); // Update langsung ketika tab aktif kembali
+            console.log('Tab visible - resuming realtime updates');
+        }
+    }
+});
+</script>
+
+<script>
+// Script untuk scrollbar (tetap sama)
+var win = navigator.platform.indexOf('Win') > -1;
+if (win && document.querySelector('#sidenav-scrollbar')) {
+  var options = {
+    damping: '0.5'
+  }
+  Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+}
+</script>
+
+<!-- Script tambahan untuk notifikasi update -->
+<script>
+// Fungsi untuk menampilkan notifikasi update
+function showUpdateNotification(message) {
+    // Buat elemen notifikasi
+    const notification = document.createElement('div');
+    notification.className = 'alert alert-success alert-dismissible fade show';
+    notification.style.position = 'fixed';
+    notification.style.top = '20px';
+    notification.style.right = '20px';
+    notification.style.zIndex = '9999';
+    notification.style.minWidth = '300px';
+    notification.innerHTML = `
+        <i class="fas fa-check-circle me-2"></i>
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove setelah 3 detik
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 3000);
+}
+
+// Fungsi untuk error notification
+function showErrorNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'alert alert-danger alert-dismissible fade show';
+    notification.style.position = 'fixed';
+    notification.style.top = '20px';
+    notification.style.right = '20px';
+    notification.style.zIndex = '9999';
+    notification.style.minWidth = '300px';
+    notification.innerHTML = `
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 5000);
+}
+</script>
+
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->

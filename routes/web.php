@@ -76,6 +76,11 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
     })->name('admin.dashboard');
     // menghitung jumlah data
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Route baru untuk realtime data
+Route::get('/dashboard/realtime-data', [DashboardController::class, 'getRealtimeData'])->name('dashboard.realtime');
+Route::get('/dashboard/monthly-revenue', [DashboardController::class, 'getMonthlyRevenue'])->name('dashboard.revenue');
+Route::get('/dashboard/popular-items', [DashboardController::class, 'getPopularItems'])->name('dashboard.popular');
     // Rute Manajemen Pengguna
     Route::get('/manajemen-pengguna', [DashboardController::class, 'manajemenPengguna'])->name('manajemen-pengguna');
     // Rute penyewaan

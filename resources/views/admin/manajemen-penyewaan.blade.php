@@ -282,7 +282,8 @@
                                             <td class="align-middle">
                                                 <div class="d-flex px-3">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $users->find($p->id)->name }}</h6>
+                                                        <h6 class="mb-0 text-sm">{{ $users->find($p->id_user)->name ?? 'Tidak diketahui' }}
+</h6>
                                                     </div>
                                                 </div>
                                             </td>
@@ -305,9 +306,10 @@
                                                     class="text-sm">{{ \Carbon\Carbon::parse($p->tanggal_sewa)->format('d-m-Y') }}</span>
                                             </td>
                                             <td class="align-middle px-3">
-                                                <span
-                                                    class="badge badge-sm bg-{{ $p->status == 'sewa' ? 'primary' : ($p->status == 'selesai' ? 'success' : 'danger') }}">{{ $p->status }}</span>
-                                            </td>
+            <span class="badge badge-sm bg-{{ $p->status == 'sewa' ? 'warning' : 'success' }}">
+              {{ $p->status }}
+            </span>
+            </td>
                                             <td class="align-middle px-3">
                                                 <button class="btn btn-info btn-sm"
                                                     onclick="showEditPembayaranModal({{ $p->id }}, '{{ $p->nama }}', '{{ $p->merek }}', '{{ $p->harga_sewa }}', '{{ $p->status }}')">Edit</button>
@@ -450,6 +452,18 @@
     <script src="../assets/js/plugins/chartjs.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+         function showEditPembayaranModal(id, nama, merek, hargaSewa, status) {
+        // Isi form modal
+        document.getElementById('editId').value = id;
+        document.getElementById('editNama').value = nama;
+        document.getElementById('editMerek').value = merek;
+        document.getElementById('editHargaSewa').value = hargaSewa;
+        document.getElementById('editStatus').value = status;
+
+        // Tampilkan modal (menggunakan Bootstrap 5)
+        let modal = new bootstrap.Modal(document.getElementById('editModal'));
+        modal.show();
+    }
         function confirmDelete(type, id_sewa) {
             Swal.fire({
                 title: 'Are you sure?',

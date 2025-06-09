@@ -21,7 +21,7 @@
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
-<!-- Extra details for Live View on GitHub Pages -->
+  <!-- Extra details for Live View on GitHub Pages -->
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6" height="0" width="0"
       style="display:none;visibility:hidden"></iframe></noscript>
@@ -30,7 +30,7 @@
     style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg'); background-position-y: 50%;">
     <span class="mask bg-primary opacity-6"></span>
   </div>
-    <aside
+  <aside
     class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 "
     id="sidenav-main">
     <div class="sidenav-header">
@@ -140,10 +140,10 @@
           <div class="col-auto my-auto">
             <div class="h-100">
               <h5 class="mb-1">
-              {{ strtoupper(Auth::user()->name) }}
+                {{ strtoupper(Auth::user()->name) }}
               </h5>
               <p class="mb-0 font-weight-bold text-sm text-muted">
-              Administrator
+                Administrator
               </p>
             </div>
           </div>
@@ -208,34 +208,34 @@
                   </thead>
                   <tbody>
                     @foreach($users as $user)
-            @if($user->role == 'customer')
-        <tr>
-          <td>
-          <div class="d-flex px-2 py-1">
-          <div class="d-flex flex-column justify-content-center">
-          <h6 class="mb-0 text-sm">{{ $user->name }}</h6>
-          </div>
-          </div>
-          </td>
-          <td>
-          <p class="text-xs font-weight-bold mb-0">{{ $user->email }}</p>
-          </td>
-          <td class="align-middle text-center text-sm">
-          <span class="badge badge-sm bg-gradient-{{ $user->status == 'active' ? 'success' : 'danger' }}">
-          {{ $user->status == 'active' ? 'ON' : 'OFF' }}
-          </span>
-          </td>
-          <td class="align-middle text-center">
-          <span class="text-secondary text-xs font-weight-bold">
-          {{ $user->created_at->format('d/m/Y') }}
-          </span>
-          </td>
-          <td class="align-middle">
-          <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-          data-original-title="Edit user">Edit</a>
-          </td>
-        </tr>
-      @endif
+                  @if($user->role == 'customer')
+              <tr>
+                <td>
+                <div class="d-flex px-2 py-1">
+                <div class="d-flex flex-column justify-content-center">
+                <h6 class="mb-0 text-sm">{{ $user->name }}</h6>
+                </div>
+                </div>
+                </td>
+                <td>
+                <p class="text-xs font-weight-bold mb-0">{{ $user->email }}</p>
+                </td>
+                <td class="align-middle text-center text-sm">
+                <span class="badge badge-sm bg-gradient-{{ $user->status == 'active' ? 'success' : 'danger' }}">
+                {{ $user->status == 'active' ? 'ON' : 'OFF' }}
+                </span>
+                </td>
+                <td class="align-middle text-center">
+                <span class="text-secondary text-xs font-weight-bold">
+                {{ $user->created_at->format('d/m/Y') }}
+                </span>
+                </td>
+                <td class="align-middle">
+                <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
+                data-original-title="Edit user">Edit</a>
+                </td>
+              </tr>
+              @endif
           @endforeach
                   </tbody>
                 </table>

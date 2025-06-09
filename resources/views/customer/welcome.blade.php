@@ -540,14 +540,16 @@
                                         <i class="fa fa-camera text-dark"></i> <span
                                             class="text-body ms-1">{{ $h->layar }}</span>
                                     </div>
-                                   
+
                                 </div>
-                                <button class="btn btn-primary rounded-pill w-100 d-flex justify-content-center py-3"  data-bs-toggle="modal" data-bs-target="#rentalModal" data-device="iPhone 15 Plus">Book Now</button>
+                                <button class="btn btn-primary rounded-pill w-100 d-flex justify-content-center py-3"
+                                    data-bs-toggle="modal" data-bs-target="#rentalModal" data-device="iPhone 15 Plus">Book
+                                    Now</button>
 
                             </div>
                         </div>
                     </div>
-                @endforeach
+                     @endforeach
 
                 @foreach($laptop as $l)
                     <div class="categories-item p-4">
@@ -607,7 +609,9 @@
                                             class="text-body ms-1">{{ $l->kategori }}</span>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary rounded-pill w-100 d-flex justify-content-center py-3"  data-bs-toggle="modal" data-bs-target="#rentalModal" data-device="iPhone 15 Plus">Book Now</button>
+                                <button class="btn btn-primary rounded-pill w-100 d-flex justify-content-center py-3"
+                                    data-bs-toggle="modal" data-bs-target="#rentalModal" data-device="iPhone 15 Plus">Book
+                                    Now</button>
 
                             </div>
                         </div>
@@ -848,11 +852,11 @@
                         </div>
 
                         <div class="mb-3">
-                        <label for="renterWa" class="form-label">Nomor WhatsApp</label>
-                        <input type="text" class="form-control" name="no_wa" id="renterWa"
-                            placeholder="Contoh: 6281234567890" required>
-                    </div>
-                    
+                            <label for="renterWa" class="form-label">Nomor WhatsApp</label>
+                            <input type="text" class="form-control" name="no_wa" id="renterWa"
+                                placeholder="Contoh: 6281234567890" required>
+                        </div>
+
                         <div class="mb-3">
                             <label for="renterDurasi" class="form-label">Durasi</label>
                             <input type="number" class="form-control" name="durasi" id="renterDurasi" required>
@@ -879,7 +883,8 @@
     </div>
 
     <!--loading modal -->
-    <div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true"
+        data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body text-center">
@@ -1273,113 +1278,123 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-    // Initialize rental modal
-    const rentalModal = document.getElementById("rentalModal");
-    const bookNowButtons = document.querySelectorAll(".btn-primary[data-bs-toggle='modal']");
-    const rentalHargaInput = document.getElementById("rentalHarga");
-    const durasiInput = document.getElementById("renterDurasi");
+            // Initialize rental modal
+            const rentalModal = document.getElementById("rentalModal");
+            const bookNowButtons = document.querySelectorAll(".btn-primary[data-bs-toggle='modal']");
+            const rentalHargaInput = document.getElementById("rentalHarga");
+            const durasiInput = document.getElementById("renterDurasi");
 
-    // Price mapping for each device
-    const devicePrices = {
-        "iPhone 15 Plus": 900000,
-        "Samsung S24 Ultra": 1300000,
-        "Asus TUF": 980000,
-        "Macbook M3 Air": 2100000
-    };
+            // Price mapping for each device
+            const devicePrices = {
+                "iPhone 15 Plus": 900000,
+                "Samsung S24 Ultra": 1300000,
+                "Asus TUF": 980000,
+                "Macbook M3 Air": 2100000
+            };
 
-    // Book Now button event listeners
-    bookNowButtons.forEach(button => {
-        button.addEventListener("click", function () {
-            const deviceName = this.getAttribute("data-device");
-            document.getElementById("deviceName").value = deviceName;
+            // Book Now button event listeners
+            bookNowButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const deviceName = this.getAttribute("data-device");
+                    document.getElementById("deviceName").value = deviceName;
 
-            // Set initial price
-            const basePrice = devicePrices[deviceName];
-            rentalHargaInput.value = basePrice;
+                    // Set initial price
+                    const basePrice = devicePrices[deviceName];
+                    rentalHargaInput.value = basePrice;
 
-            // Update price when duration changes
-            durasiInput.addEventListener("input", function () {
-                const duration = parseInt(this.value) || 0;
-                const totalPrice = basePrice * duration;
-                rentalHargaInput.value = totalPrice;
-            });
-        });
-    });
-
-    // Set user name if available
-    const userName = document.querySelector('meta[name="user-name"]')?.content;
-    if (userName) {
-        document.getElementById("renterName").value = userName;
-    }
-
-    // Form submission handler using jQuery
-    $(document).ready(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $('#rentalForm').on('submit', function (e) {
-            e.preventDefault();
-            
-            // Show loading modal
-            $('#loadingModal').modal('show');
-            
-            const formData = $(this).serialize();
-            console.log("Data yang dikirim:", formData);
-
-            $.ajax({
-                url: $(this).attr('action'),
-                type: 'POST',
-                data: formData,
-                dataType: 'json',
-                success: function (response) {
-                    // Hide loading modal after 2 seconds
-                    setTimeout(function() {
-                        $('#loadingModal').modal('hide');
-                        console.log("Response dari server:", response);
-
-                        let message = response.message || "Penyewaan berhasil!";
-
-                        if (!response.message) {
-                            const tanggalSewa = new Date($('#tanggal_sewa').val());
-                            const durasi = parseInt($('#durasi').val());
-                            tanggalSewa.setDate(tanggalSewa.getDate() + durasi);
-                            const tanggalSelesai = tanggalSewa.toISOString().split('T')[0];
-
-                            message = `Penyewaan berhasil! Anda menyewa selama ${durasi} hari. Jangan lupa untuk di kembalikan ya guys Sewa berakhir pada: ${tanggalSelesai}.`;
-                        }
-
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Penyewaan Berhasil!',
-                            text: message,
-                            confirmButtonText: 'Tutup',
-                            timer: 5000
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-                    }, 2000); // Show loading for 2 seconds
-                },
-                error: function (xhr) {
-                    $('#loadingModal').modal('hide');
-                    console.log("Error Response:", xhr.responseJSON);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Terjadi kesalahan. Periksa kembali input.'
+                    // Update price when duration changes
+                    durasiInput.addEventListener("input", function () {
+                        const duration = parseInt(this.value) || 0;
+                        const totalPrice = basePrice * duration;
+                        rentalHargaInput.value = totalPrice;
                     });
-                }
+                });
+            });
+
+            // Set user name if available
+            const userName = document.querySelector('meta[name="user-name"]')?.content;
+            if (userName) {
+                document.getElementById("renterName").value = userName;
+            }
+
+            // Form submission handler using jQuery
+            $(document).ready(function () {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $('#rentalForm').on('submit', function (e) {
+                    e.preventDefault();
+
+                    // Show loading modal
+                    $('#loadingModal').modal('show');
+
+                    const formData = $(this).serialize();
+                    console.log("Data yang dikirim:", formData);
+
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        type: 'POST',
+                        data: formData,
+                        dataType: 'json',
+                        success: function (response) {
+                            // Hide loading modal after 2 seconds
+                            setTimeout(function () {
+                                $('#loadingModal').modal('hide');
+                                console.log("Response dari server:", response);
+
+                                let message = response.message || "Penyewaan berhasil!";
+
+                                // Cek jika API WA gagal
+                                if (response.wa_response && response.wa_response.status !== 'success') {
+                                    message += " Namun, pesan WhatsApp gagal dikirim.";
+                                }
+
+                                if (!response.message) {
+                                    const tanggalSewa = new Date($('#tanggal_sewa').val());
+                                    const durasi = parseInt($('#durasi').val());
+                                    tanggalSewa.setDate(tanggalSewa.getDate() + durasi);
+                                    const tanggalSelesai = tanggalSewa.toISOString().split('T')[0];
+
+                                    message = `Penyewaan berhasil! Anda menyewa selama ${durasi} hari. Jangan lupa untuk di kembalikan ya guys. Sewa berakhir pada: ${tanggalSelesai}.`;
+
+                                    // Tambahkan info WA jika gagal
+                                    if (response.wa_response && response.wa_response.status !== 'success') {
+                                        message += " Namun, pesan WhatsApp gagal dikirim.";
+                                    }
+                                }
+
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Penyewaan Berhasil!',
+                                    text: message,
+                                    confirmButtonText: 'Tutup',
+                                    timer: 5000
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.reload();
+                                    }
+                                });
+                            }, 2000); // Show loading for 2 seconds
+                        },
+                        error: function (xhr) {
+                            $('#loadingModal').modal('hide');
+                            console.log("Error Response:", xhr.responseJSON);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Terjadi kesalahan. Periksa kembali input.'
+                            });
+                        }
+                    });
+
+                });
             });
         });
-    });
-});
-
-
     </script>
+
 
 
 

@@ -35,16 +35,13 @@ class PenyewaanController extends Controller
             'harga_sewa' => 'required|numeric|min:0'
         ]);
 
-        // Hitung tanggal selesai sewa
         $tanggalSelesai = date('Y-m-d', strtotime("+{$validated['durasi']} days", strtotime($validated['tanggal_sewa'])));
 
-        // Simpan penyewaan ke database
+        // Simpan ke database
         Penyewaan::create($validated);
 
-        // Link Google Maps lokasi kantor
-        $googleMapsUrl = "https://www.google.com/maps/place/PT.+Cahaya+Perkasa+Inspeksindo/@-6.3376506,107.2812254,17z/data=!4m14!1m7!3m6!1s0x2e699d0280b7dc4f:0xc53802d4b608f!2sPT.+Cahaya+Perkasa+Inspeksindo!8m2!3d-6.3376506!4d107.2838003!16s%2Fg%2F11fs_hkq73!3m5!1s0x2e699d0280b7dc4f:0xc53802d4b608f!8m2!3d-6.3376506!4d107.2838003!16s%2Fg%2F11fs_hkq73?entry=ttu&g_ep=EgoyMDI1MDUxMy4xIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D";
-
-        // Format pesan WhatsApp
+        // Buat isi pesan WA
+        $googleMapsUrl = "https://www.google.com/maps/place/PT.+Cahaya+Perkasa+Inspeksindo/@-6.3376506,107.2812254...";
         $pesan = "🌟 *Konfirmasi Penyewaan Perangkat* 🌟\n\n"
             . "Halo *{$validated['nama']}*,\n"
             . "Terima kasih telah melakukan penyewaan perangkat *{$validated['merek']}* melalui sistem kami.\n\n"
@@ -61,25 +58,40 @@ class PenyewaanController extends Controller
             . "📱 Sistem Penyewaan Perangkat\n"
             . "────────────────────────────";
 
-
-        // Kirim pesan ke API WhatsApp
-        $apiKey = '7GbsI3PnkQDKyAgFbAELIgKSlgFRta'; // Ganti dengan API key kamu
-        $sender = '6281573635413';  // Ganti dengan nomor pengirim yang terdaftar
+        // Kirim WA
+        $apiKey = 'dDIcB2zq75YOUda0gKlVNNzpva2KJQ';
+        $sender = '081573635413';
         $number = $validated['no_wa'];
 
-        $response = Http::get('https://wa.codeucil.my.id/send-message', [
-            'api_key' => $apiKey,
-            'sender'  => $sender,
-            'number'  => $number,
-            'message' => $pesan
-        ]);
+        try {
+            $response = Http::get('https://wa.codeucil.my.id/send-message', [
+                'api_key' => $apiKey,
+                'sender'  => $sender,
+                'number'  => $number,
+                'message' => $pesan
+            ]);
 
-        return response()->json([
-            'message' => "Penyewaan berhasil! Sewa berakhir pada {$tanggalSelesai}. Pesan WA dikirim.",
-            'wa_response' => $response->json()
-        ]);
+            $waResponse = $response->json();
+
+            if (!$response->successful() || ($waResponse['status'] ?? '') !== 'success') {
+                // Tetap kirim response sukses
+                return response()->json([
+                    'message' => 'Penyewaan berhasil, tapi gagal mengirim pesan WhatsApp.',
+                    'wa_response' => $waResponse
+                ]);
+            }
+
+            return response()->json([
+                'message' => "Penyewaan berhasil! Sewa berakhir pada {$tanggalSelesai}. Pesan WA dikirim.",
+                'wa_response' => $waResponse
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Penyewaan berhasil, tapi terjadi kesalahan saat mengirim pesan WhatsApp.',
+                'wa_response' => $e->getMessage()
+            ]);
+        }
     }
-
 
 
     public function deletePenyewaan($id_sewa)

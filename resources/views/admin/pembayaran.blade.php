@@ -491,21 +491,21 @@
       window.open(`/cetak-invoice/${id}`, '_blank');
     });
 
-    document.getElementById('statusFilter').addEventListener('change', function() {
-    const status = this.value;
-    const rows = document.querySelectorAll('tbody tr');
-    
-    rows.forEach(row => {
+    document.getElementById('statusFilter').addEventListener('change', function () {
+      const status = this.value;
+      const rows = document.querySelectorAll('tbody tr');
+
+      rows.forEach(row => {
         const statusCell = row.querySelector('td:nth-child(7)');
         const statusText = statusCell.textContent.trim().toLowerCase();
-        
+
         if (status === 'all' || statusText === status) {
-            row.style.display = '';
+          row.style.display = '';
         } else {
-            row.style.display = 'none';
+          row.style.display = 'none';
         }
+      });
     });
-});
 
   </script>
 </body>
